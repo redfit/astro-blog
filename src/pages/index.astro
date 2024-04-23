@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import '../styles/index.css'
+
+const isRed = true;
+const foreground = 'red'
+const background = 'lavender'
 ---
 
 <Layout title="Welcome to Astro.">
@@ -33,7 +38,9 @@ import Card from '../components/Card.astro';
 				</linearGradient>
 			</defs>
 		</svg>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+
+
+		<h1 class:list={['box', { red: isRed }]}>Welcome to <span class="text-gradient">Astro</span></h1>
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br />
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
@@ -63,7 +70,13 @@ import Card from '../components/Card.astro';
 	</main>
 </Layout>
 
-<style>
+<style define:vars={{ foreground, background }}>
+	.box {
+		border: 1px solid blue;
+	}
+	.red {
+		border: 2px solid red;
+	}
 	main {
 		margin: auto;
 		padding: 1rem;
@@ -83,6 +96,8 @@ import Card from '../components/Card.astro';
 		z-index: -1;
 	}
 	h1 {
+		color: var(--foreground);
+		background: var(--background);
 		font-size: 4rem;
 		font-weight: 700;
 		line-height: 1;
