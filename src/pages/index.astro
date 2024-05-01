@@ -1,98 +1,22 @@
 ---
-import {getCollection} from 'astro:content'
-import Layout from '../layouts/Layout.astro';
-import Link from '../components/link.astro'
-import '../styles/index.css'
+import { getCollection } from 'astro:content';
 
-const isRed = true;
-const foreground = 'red'
-const background = 'lavender'
-const posts  = await getCollection('blog')
+import PostsList from '../components/PostsList.astro';
+import Layout from '../layouts/Layout.astro';
+
+const posts = await getCollection('blog');
 ---
 
 <Layout title='Welcome to Astro.'>
+	<div class='h-64 flex flex-col justify-center items-start'>
+		<h1 class='text-heading-1'>Hello, I'm Lazar Nikolov.</h1>
+		<p class='mt-2'>
+			I'm a Developer Advocate and Software Engineer. I like writing code and
+			mentoring.
+		</p>
+	</div>
 	<div class='flex flex-col'>
-		<h2 class='text-2xl font-semibold'>Blog posts:</h2>
-		<ol class='mt-4 px-10 space-y-2 list-decimal'>
-			{
-				posts.map((post) => (
-					<li>
-						<Link class='flex justify-between' href={`/blog/${post.slug}`}>
-							{post.data.title}
-							<span class='text-gray-400'>
-                {post.data.date.toUTCString().slice(0, -13)}
-              </span>
-						</Link>
-					</li>
-				))
-			}
-		</ol>
+		<h2 class='text-2xl font-semibold'>Recent blog posts:</h2>
+		<PostsList posts={posts.slice(0, 3)} />
 	</div>
 </Layout>
-
-<style define:vars={{ foreground, background }}>
-	.box {
-		border: 1px solid blue;
-	}
-	.red {
-		border: 2px solid red;
-	}
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	.astro-a {
-		position: absolute;
-		top: -32px;
-		left: 50%;
-		transform: translatex(-50%);
-		width: 220px;
-		height: auto;
-		z-index: -1;
-	}
-	h1 {
-		color: var(--foreground);
-		background: var(--background);
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions code {
-		font-size: 0.8em;
-		font-weight: bold;
-		background: rgba(var(--accent-light), 12%);
-		color: rgb(var(--accent-light));
-		border-radius: 4px;
-		padding: 0.3em 0.4em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
-</style>
