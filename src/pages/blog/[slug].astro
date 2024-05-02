@@ -18,8 +18,7 @@ const post: CollectionEntry<'blog'> = Astro.props.post
 
 const { Content } = await post.render()
 ---
-
-<Layout title={post.data.title}>
+<Layout seo={{ title: post.data.title, description: post.data.description }}>
   <article>
       <Content />
   </article>
