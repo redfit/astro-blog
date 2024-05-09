@@ -2,6 +2,7 @@
 import {getCollection, type CollectionEntry}  from "astro:content";
 
 import Layout from '../../layouts/Layout.astro'
+import PostsList from "../../components/PostsList.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
@@ -21,5 +22,6 @@ const { Content } = await post.render()
 <Layout seo={{ title: post.data.title, description: post.data.description }}>
   <article>
       <Content />
+      <PostsList client:only="react" />
   </article>
 </Layout>

@@ -1,24 +1,19 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
-
 import sitemap from "@astrojs/sitemap";
+
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
   'site': "http://localhost:4321",
-  integrations: [
-    tailwind(),
-    sitemap({
-    filter: (page) => !/https:\/\/nikolovlazar\.com\/blog\/[0-9]+/.test(page),
-    customPages: [
-      'https://nikolovlazar.com/discord',
-      'https://nikolovlazar.com/twitch',
-      'https://nikolovlazar.com/twitter',
-    ],
+  integrations: [tailwind(), sitemap({
+    filter: page => !/https:\/\/nikolovlazar\.com\/blog\/[0-9]+/.test(page),
+    customPages: ['https://nikolovlazar.com/discord', 'https://nikolovlazar.com/twitch', 'https://nikolovlazar.com/twitter'],
     changefreq: 'weekly',
     lastmod: new Date(),
     priority: 0.85,
-    serialize: (item) => {
+    serialize: item => {
       // Remove trailing slashes
       if (item.url.at(-1) === '/') {
         item.url = item.url.slice(0, -1);
@@ -31,8 +26,8 @@ export default defineConfig({
       locales: {
         en: 'en-US',
         es: 'es-ES',
-        fr: 'fr-CA',
-      },
-    },
-  }),]
+        fr: 'fr-CA'
+      }
+    }
+  }), react()]
 });
